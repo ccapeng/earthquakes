@@ -12,6 +12,7 @@ const indexData = async () => {
         let props = result.properties;
         let geo = result.geometry;
         let obj = {
+            id: result.id,
             place: props.place,
             time: props.time,
             tiamp: props.time,
@@ -57,23 +58,36 @@ const indexData = async () => {
             }
         });
 
-        let results = EARTHQUAKES.data.features
-        let earthquakeResults = [];
-        for (let result of results) {
-            let earthquakeObject = getEarthquakeObject(result);
-            let elasticResult = await client.index({ 
-                index: INDEX_EQRTHQUAKES,
-                id: result.id,
-                body: earthquakeObject
-            });
-            //console.log(index, "result id", result.id);
-            earthquakeResults.push(elasticResult);
+        let features = EARTHQUAKES.data.features
+        //let earthquakeResults = [];
+        // for (let result of results) {
+        //     let earthquakeObject = getEarthquakeObject(result);
+        //     let elasticResult = await client.index({ 
+        //         index: INDEX_EQRTHQUAKES,
+        //         id: result.id,
+        //         body: earthquakeObject
+        //     });
+        //     earthquakeResults.push(elasticResult);
+        // }
+
+        let earthquakes = [];
+        for (let feature of features) {
+            let earthquake = getEarthquakeObject(feature);
+            earthquakes.push(earthquake);
         }
-        console.log('data indexed:', earthquakeResults.length);
-        await client.indices.refresh({ index: INDEX_EQRTHQUAKES })
+
+        // insert data in bulk
+        let body = earthquakes.flatMap(
+            obj => [{ index: { _index: INDEX_EQRTHQUAKES } }, obj]
+        );
+        let results = await client.bulk({ 
+            refresh: true,
+            body
+        });
+        console.log('data indexed:', results.body.items.length);
 
     } catch (err) {
-        console.log("err:", err);
+        console.log("err:", JSON.stringify(err, null, 4));
     };
 
 }

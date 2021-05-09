@@ -13,9 +13,11 @@ app.use('/api/earthquakes', earthquakeRrouter);
  
 // load data initially and contiguously
 const DATA_INTERVAL = process.env.DATA_INTERVAL || 180000;
-pingElastic();
-indexData();
-setInterval(function(){indexData()}, DATA_INTERVAL);
+let isElasticRunning = await pingElastic();
+if (isElasticRunning) {
+    indexData();
+    setInterval(function(){indexData()}, DATA_INTERVAL);
+}
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.group(`Server Started On ${PORT}`));

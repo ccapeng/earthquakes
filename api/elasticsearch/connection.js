@@ -9,16 +9,16 @@ const client = new Client({
 const INDEX_EQRTHQUAKES = "earthquakes";
 
 // check that Elasticsearch is up and running
-const pingElastic = () => {
-    client.ping(
-        function(error, res) {
-            if (error) {
-                console.error('elasticsearch cluster is down!');
-            } else {
-                console.log('Elasticsearch Ready:', ES_HOST);
-            }
-        }
-    );
+const pingElastic = async () => {
+    try {
+        await client.ping();
+        console.log('Elasticsearch Ready:', ES_HOST);
+        return true;
+    } catch (e) {
+        console.error('elasticsearch cluster is down!');
+        console.error(e);
+    }
+    return false;
 }
 
 export {
