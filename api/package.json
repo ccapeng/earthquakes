@@ -1,0 +1,24 @@
+{
+  "name": "earthquakes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon --max-old-space-size=8192 server",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.12.0",
+    "agentkeepalive": "^4.1.4",
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "express-form-data": "^2.0.16",
+    "get-json": "^1.0.1",
+    "log-timestamp": "^0.3.0",
+    "nodemon": "^2.0.7"
+  },
+  "type": "module"
+}
