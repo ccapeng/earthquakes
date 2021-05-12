@@ -1,23 +1,27 @@
 import express from 'express';
 import earthquakeRrouter from './routes/earthquakes.js';
-import { pingElastic } from './elasticsearch/connection.js';
-import { indexData } from './services/data.js';
+import { loadData } from './services/data.js';
 
-// initialize sxpress
+// initialize express
+const HOST = process.env.HOST || "http://127.0.0.1"
 const app = express(); 
 
 // init middleware
 app.use(express.json({ extended: false }));
 app.use(express.urlencoded({ extended: true }));
-app.use('/api/earthquakes', earthquakeRrouter);
- 
-// load data initially and contiguously
-const DATA_INTERVAL = process.env.DATA_INTERVAL || 180000;
-let isElasticRunning = await pingElastic();
-if (isElasticRunning) {
-    indexData();
-    setInterval(function(){indexData()}, DATA_INTERVAL);
-}
+app.use('', earthquakeRrouter);
 
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.group(`Server Started On ${PORT}`));
+// load data initially and contiguously
+loadData();
+
+// start up server
+let port = process.env.PORT || 5001;
+export const server = app.listen(port, () => {
+    let host = HOST + ":" + server.address().port;
+    console.log("server startat:", host);
+    earthquakeRrouter.stack.forEach(function(r){
+        if (r.route && r.route.path){
+          console.log(`Route: ${host}${r.route.path}`)
+        }
+    });
+});
