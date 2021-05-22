@@ -8,8 +8,12 @@
   For now, elastic search server must be up in order to see the result.  
   Docker version is coming.
 
-- Run `npm run server` to start.  
-  Check eathquake data [http://127.0.0.1:5001/api/earthquakes](http://127.0.0.1:5001/api/earthquakes)
+- Run `npm run server` to start.
+
+
+## API Endpoint
+- Check eathquake data:  
+  [http://127.0.0.1:5001/api/earthquakes](http://127.0.0.1:5001/api/earthquakes)
 
 - Search eqrthquak location by query string `?place=CA`.   
   For example : [http://127.0.0.1:5001/api/earthquakes?place=CA](http://127.0.0.1:5001/api/earthquakes?place=CA)

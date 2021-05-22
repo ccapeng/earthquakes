@@ -1,0 +1,11 @@
+.loc-panel {
+  height: calc(100vh - 6rem);
+  overflow: auto
+}
+
+@media (max-width: 767.98px) {
+  .loc-panel {
+    height: auto;
+    overflow: hidden
+  }
+}
