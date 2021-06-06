@@ -17,6 +17,10 @@ const EarthquakeService = {
   get: (guid) => {
     let url = `api/earthquakes/${guid}`;
     return Request.get(url);
+  },
+  getExternalList:() => {
+    const url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
+    return Request.getExternal(url);
   }
 }
 

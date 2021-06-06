@@ -7,7 +7,8 @@ const client = new Client({
 });
 
 const INDEX = "earthquakes";
-
+let pingCount = 0;
+const PING_MAX = 20, PING_INTERVAL = 5000;
 // check that Elasticsearch is up and running
 // then check if search index, create it if not exists.
 const ping = async () => {
@@ -22,9 +23,25 @@ const ping = async () => {
             console.log(`elasticsearch index, ${INDEX}, created.`);
         }
         return true;
+
     } catch (e) {
-        console.error('elasticsearch cluster is down!');
-        console.error(e);
+        if (
+            e.constructor.name === "ConnectionError"
+        ) {
+            if (pingCount < PING_MAX) {
+                console.error('elasticsearch is not ready.');
+                pingCount++;
+                await new Promise(resolve => setTimeout(resolve, PING_INTERVAL));
+                console.log(`#${pingCount} sleep: ${PING_INTERVAL}ms`);
+                return await ping();
+            } else {
+                console.error('elasticsearch is not up.');
+                console.error(e);
+            }
+        } else {
+            console.error('elasticsearch cluster is down.');
+            console.error(e);
+        }
     }
     return false;
 }
@@ -85,7 +102,7 @@ const index = async(features) => {
         refresh: true,
         body
     });
-    console.log('data indexed:', results.body.items.length);
+    console.log('elasticsearch data indexed:', results.body.items.length);
 
 }
 

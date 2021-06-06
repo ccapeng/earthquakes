@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ping, indexSearchData, searchData } from './search.js';
 
 const URL = `https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson`;
-const INTERVAL = process.env.DATA_INTERVAL || 180000;
+const INTERVAL = process.env.DATA_INTERVAL || 180000; //3 minutes
 
 const indexData = async () => {
 

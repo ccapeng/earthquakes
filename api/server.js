@@ -36,7 +36,7 @@ loadData();
 let port = process.env.PORT || 5001;
 export const server = app.listen(port, () => {
     let host = HOST + ":" + port;
-    console.log("server startat:", host);
+    console.log("server:", host);
     for (let router of routers) {
       router.stack.forEach(function(r){
         if (r.route && r.route.path){

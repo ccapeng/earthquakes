@@ -15,5 +15,11 @@
 - Check eathquake data:  
   [http://127.0.0.1:5001/api/earthquakes](http://127.0.0.1:5001/api/earthquakes)
 
-- Search eqrthquak location by query string `?place=CA`.   
+- Search earthquark location by query string `?place=CA`.   
   For example : [http://127.0.0.1:5001/api/earthquakes?place=CA](http://127.0.0.1:5001/api/earthquakes?place=CA)
+
+## Tech Highlights
+- When server startup, wait for elastic search ready.  
+  In docker environment, elastic search takes longer time to start up.
+  I have a sleeping loop to wait for it ready.
+- Load earthquake data every 3 minutes.

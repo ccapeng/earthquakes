@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { withRouter } from 'react-router';
 import { useAtom } from "jotai";
-import { searchAtom } from "../store/search.js";
+import { searchAtom } from "../store/storeAtom.js";
 
 const Header = ({history}) => {
 
@@ -41,6 +41,8 @@ const Header = ({history}) => {
             US Earthquakes
           </a>
         </div>
+        {
+        /*
         <form onSubmit={(event)=>event.preventDefault()} className="form-inline">
           <input 
             className="form-control" 
@@ -57,6 +59,8 @@ const Header = ({history}) => {
             Search
           </button>
         </form>
+        */
+        }
       </div>
     </nav>
   );
