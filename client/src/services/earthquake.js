@@ -1,5 +1,9 @@
 import Request from "./request";
 
+const URL = 
+  process.env.REACT_APP_USGS || 
+  "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
+
 const EarthquakeService = {
   list: (obj) => {
     let url;
@@ -19,8 +23,7 @@ const EarthquakeService = {
     return Request.get(url);
   },
   getExternalList:() => {
-    const url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
-    return Request.getExternal(url);
+    return Request.getExternal(URL);
   }
 }
 

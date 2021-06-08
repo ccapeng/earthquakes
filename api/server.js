@@ -3,9 +3,9 @@ import earthquakeRouter from './routes/earthquakes.js';
 import mapRouter from './routes/maps.js';
 import geojsonRouter from './routes/geojson.js';
 import { loadData } from './services/earthquake.js';
+import { settings } from './settings.js';
 
 // initialize express
-const HOST = process.env.HOST || "http://127.0.0.1"
 const app = express(); 
 
 // init middleware
@@ -33,9 +33,8 @@ for (let router of routers) {
 loadData();
 
 // start up server
-let port = process.env.PORT || 5001;
-export const server = app.listen(port, () => {
-    let host = HOST + ":" + port;
+export const server = app.listen(settings.PORT, () => {
+    let host = settings.HOST + ":" + settings.PORT;
     console.log("server:", host);
     for (let router of routers) {
       router.stack.forEach(function(r){

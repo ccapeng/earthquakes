@@ -39,12 +39,11 @@ const App = () => {
       <main className="container-fluid mt-3">
         <div className="row">
           <div className="col-md-8 col-sm-12">
-
+            {console.log("rendering map.")}
             <Map center={fromLonLat(map.center)} zoom={map.zoom}>
               <Layers>
                 <TileLayer source={osm()} zIndex={0} />
                 {map.mapList.map((layer, index)=>{
-                  console.log("rendering map:", layer);
                   return (
                   <VectorLayer
                       source={vector({
@@ -53,7 +52,7 @@ const App = () => {
                         }),
                       })}
                       style={layer.style}
-                      key={`layer-${index}`}
+                      key={`map-${index}`}
                   />
                   )
                   }

@@ -4,13 +4,16 @@ import { search } from '../services/earthquake.js';
 
 const router = express.Router();
 
+/**
+ * Get earthquake locations
+ */
 router.get('/api/earthquakes', async function (req, res) {
     let place = req.query.place;
     try {
         let results = await search(place);
         res.json(results)
     } catch (e) {
-        console.log("error", JSON.stringify(e, null, 4));
+        console.log("earthquake route error", JSON.stringify(e, null, 4));
     }
 
 });

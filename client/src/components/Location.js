@@ -26,9 +26,10 @@ const Location = () => {
             USA Earthquake Locations
           </a>
         </li>
-        {locationList.map(location=>{
+        {locationList.map((location, index)=>{
+          console.log("location", location.id)
           return (
-            <li key={`loc-${location.id}`} className="list-group-item">
+            <li key={`loc-${location.id}-${index}`} className="list-group-item">
               <a href={`#${location.id}`} onClick={()=>gotoLocation(`${location.id}`)}>
                 {location.place}
               </a>

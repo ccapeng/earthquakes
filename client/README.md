@@ -9,7 +9,15 @@
     - Location search
 
 - Development
-  - To start: `npm start`
+  - Environments:
+    - DATA_ENV
+      - DATA_ENV=1  
+        Connect to external data.  
+        That is to get data directly from https://earthquake.usgs.gov
+      - DATA_ENV=2
+        Connect to backend server data.  
+        That is to get data from backend node server.
+  - To start: `npm dev`
   - To build: `npm build`
   - To view: [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
 

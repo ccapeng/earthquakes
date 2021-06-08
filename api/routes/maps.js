@@ -10,15 +10,15 @@ router.get('/api/maps/:country', async function (req, res) {
         let results = await loadMap({
             country
         });
-        console.log("country results:", results)
-        //console.log(typeof(results));
         return res.json(results);
     } catch (e) {
-        //console.log("get error", JSON.stringify(e, null, 4));
         console.log("get error", e);
     }
 });
 
+/**
+ * Get map outline by state
+ */
 router.get('/api/maps/:country/:state', async function (req, res) {
     let country = req.params.country;
     let state = req.params.state;

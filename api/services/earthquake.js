@@ -1,16 +1,15 @@
 import 'log-timestamp';
 import axios from 'axios';
 import { ping, indexSearchData, searchData } from './search.js';
+import { indexCache, searchCache } from './cache.js';
+import { settings } from '../settings.js';
 
-const URL = `https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson`;
-const INTERVAL = process.env.DATA_INTERVAL || 180000; //3 minutes
 
 const indexData = async () => {
 
     try {
         // get data from USGS
-        console.log(`Getting Data From Host: ${URL}`);
-        const EARTHQUAKES = await axios.get(`${URL}`,{
+        const EARTHQUAKES = await axios.get(`${settings.USGS_URL}`,{
             headers: {
                 'Content-Type': [
                     'application/json',  
@@ -19,25 +18,42 @@ const indexData = async () => {
             }
         });
 
-        // insert data to search index
-        let features = EARTHQUAKES.data.features
-        indexSearchData(features);
+        let features = EARTHQUAKES.data.features;
+        // insert data to cache
+        if (settings.isCachedDataUsed()) {
+            indexCache(features);
 
+        // insert data to search index
+        } else if (settings.isBackendDataUsed()) {
+            indexSearchData(features);
+        }
+        
     } catch (err) {
-        console.log("err:", JSON.stringify(err, null, 4));
+        console.error(error);
     };
 
 }
 
 const search = (place) => {
-    return searchData(place);
+    if (settings.isCachedDataUsed()) {
+        return searchCache(place);
+    } else if (settings.isBackendDataUsed()) {
+        return searchData(place);
+    }
 }
 
 const loadData = async() => {
-    let isAvailable = await ping();
-    if (isAvailable) {
-        indexData();
-        setInterval(()=>indexData(), INTERVAL);
+    if (settings.isCachedDataUsed()) {
+        console.log("CachedData");
+        await indexData();
+        setInterval(()=>indexData(), settings.INTERVAL);
+    } else if (settings.isBackendDataUsed()) {
+        console.log("BackendData");
+        let isAvailable = await ping();
+        if (isAvailable) {
+            await indexData();
+            setInterval(()=>indexData(), settings.INTERVAL);
+        }
     }
 }
 
