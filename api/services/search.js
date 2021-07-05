@@ -49,11 +49,10 @@ const ping = async () => {
 const index = async(earthquakes) => {
 
     // insert data in bulk
-    console.log("index earthquakes", earthquakes);
+    // set _id to avoid the duplication
     let body = earthquakes.flatMap(
         obj => [{ index: { _index: INDEX, _id: obj.id } }, obj]
     );
-    console.log("index body", body);
     let results = await client.bulk({ 
         refresh: true,
         body

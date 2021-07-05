@@ -19,12 +19,15 @@ const indexData = async () => {
         });
 
         let features = EARTHQUAKES.data.features;
+        //console.log("features", features);
         // insert data to cache
         if (settings.isCachedDataUsed()) {
+            console.log("isCachedDataUsed", features.length);
             indexCache(features);
 
         // insert data to search index
         } else if (settings.isBackendDataUsed()) {
+            console.log("isBackendDataUsed");
             indexSearchData(features);
         }
         
@@ -36,8 +39,10 @@ const indexData = async () => {
 
 const search = (place) => {
     if (settings.isCachedDataUsed()) {
+        console.log("searchCache");
         return searchCache(place);
     } else if (settings.isBackendDataUsed()) {
+        console.log("searchData");
         return searchData(place);
     }
 }

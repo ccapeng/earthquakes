@@ -9,6 +9,7 @@ const router = express.Router();
  */
 router.get('/api/earthquakes', async function (req, res) {
     let place = req.query.place;
+    console.log("place:", place);
     try {
         let results = await search(place);
         res.json(results)
