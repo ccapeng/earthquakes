@@ -73,7 +73,7 @@ const search = async(place) => {
         cond.body = {
             query: {
                 match : {
-                    place: place
+                    "properties.place": place
                 }
             }
         }
