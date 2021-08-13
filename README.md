@@ -33,4 +33,4 @@
 ## Put them together.
 - AWS Cloudfront [https://d18i7nuoh1e3vv.cloudfront.net/](https://d18i7nuoh1e3vv.cloudfront.net/)
 - AWS S3 [http://alex-react.s3-website-us-east-1.amazonaws.com/](http://alex-react.s3-website-us-east-1.amazonaws.com/)
--AWS Serverless [https://zwr90fcqtl.execute-api.us-east-1.amazonaws.com/dev/api/earthquakes](https://zwr90fcqtl.execute-api.us-east-1.amazonaws.com/dev/api/earthquakes)
+- AWS Serverless [https://zwr90fcqtl.execute-api.us-east-1.amazonaws.com/dev/api/earthquakes](https://zwr90fcqtl.execute-api.us-east-1.amazonaws.com/dev/api/earthquakes)
